@@ -1,11 +1,11 @@
-[programs.localnet]
-buy_me_sol_solana_program = "Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS"
+[programs.devnet]
+buy_me_sol_solana_program = "6XxwwEZhFbEfg5d8iiEXhArX15rSwRbtLanQ3EcETKXy"
 
 [registry]
 url = "https://anchor.projectserum.com"
 
 [provider]
-cluster = "localnet"
+cluster = "devnet"
 wallet = "/root/.config/solana/id.json"
 
 [scripts]
