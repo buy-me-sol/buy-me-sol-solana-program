@@ -58,6 +58,32 @@ pub mod buy_me_sol_solana_program {
 
         Ok(())
     }
+
+    pub fn add_message(
+        ctx: Context<AddMessage>,
+        creator_pubkey: Pubkey,
+        message_from_user: String,
+        amount: String,
+    ) -> ProgramResult {
+        // Get reference of the base account
+        let base_account = &mut ctx.accounts.base_account;
+        let user = &mut ctx.accounts.user;
+
+        let amt: u16 = amount.parse().unwrap();
+
+        // Build the struct
+        let message_struct = MessageStruct {
+            creator_address: creator_pubkey,
+            supporter_address: *user.to_account_info().key,
+            message: message_from_user,
+            sol_amount: amt,
+        };
+
+        // Add it to the messages
+        base_account.messages.push(message_struct);
+
+        Ok(())
+    }
 }
 
 // Specify data needed in Initialize Context
@@ -79,6 +105,16 @@ pub struct CreateAccount<'info> {
     pub user: Signer<'info>,
 }
 
+// Specify data needed in AddMessage Context
+#[derive(Accounts)]
+pub struct AddMessage<'info> {
+    #[account(mut)]
+    pub base_account: Account<'info, BaseAccount>,
+    #[account(mut)]
+    pub user: Signer<'info>,
+    system_program: Program<'info, System>,
+}
+
 // Custom struct for Creator Account
 #[derive(Debug, Clone, AnchorSerialize, AnchorDeserialize)]
 pub struct CreatorStruct {
@@ -94,6 +130,15 @@ pub struct SupporterStruct {
     pub name: String,
 }
 
+// Custom struct for Message
+#[derive(Debug, Clone, AnchorSerialize, AnchorDeserialize)]
+pub struct MessageStruct {
+    pub creator_address: Pubkey,
+    pub supporter_address: Pubkey,
+    pub message: String,
+    pub sol_amount: u16,
+}
+
 #[account]
 pub struct BaseAccount {
     pub total_creators: u64,
@@ -101,4 +146,6 @@ pub struct BaseAccount {
     // Vector of type CreatorStruct to store creators list
     pub creator_list: Vec<CreatorStruct>,
     pub supporter_list: Vec<SupporterStruct>,
+    // Vector of type MessageStrcut to store messages
+    pub messages: Vec<MessageStruct>,
 }

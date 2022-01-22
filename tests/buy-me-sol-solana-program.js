@@ -1,4 +1,5 @@
 const anchor = require('@project-serum/anchor');
+const { PublicKey } = require('@solana/web3.js');
 
 const { SystemProgram } = anchor.web3;  
 
@@ -32,7 +33,7 @@ const main = async() => {
   console.log('👀 Total Supporters: ', account.totalSupporters.toString());
   
   // Call create creator account
-  await program.rpc.createCreator("Apratim Mehta", "apraX568",{
+  await program.rpc.createCreator("apraX568","Apratim Mehta",{
     accounts: {
       baseAccount: baseAccount.publicKey,
       user: provider.wallet.publicKey,
@@ -55,6 +56,22 @@ const main = async() => {
   console.log('👀 Creator List :', account.creatorList);
   // Access creator_list on the account
   console.log('👀 Supporter List :', account.supporterList);
+
+  // Test Add Message
+  const creatorPubkey = new PublicKey('69e2mCepiCTdZfjedvWnZfunwhYFc1qo2Tmf1CTpNoQJ')
+
+  // Call add message
+  await program.rpc.addMessage(creatorPubkey, "Nice Work 👍", "1",{
+    accounts: {
+      baseAccount: baseAccount.publicKey,
+      user: provider.wallet.publicKey,
+      systemProgram: SystemProgram.programId,
+    }
+  });
+
+  account = await program.account.baseAccount.fetch(baseAccount.publicKey);
+  // Access messages on the account
+  console.log('👀 Message :', account.messages);
 }
 
 const runMain = async () => {
