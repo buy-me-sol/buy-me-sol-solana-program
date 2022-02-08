@@ -61,7 +61,7 @@ const main = async() => {
   const creatorPubkey = new PublicKey('69e2mCepiCTdZfjedvWnZfunwhYFc1qo2Tmf1CTpNoQJ')
 
   // Call add message
-  await program.rpc.addMessage(creatorPubkey, "Nice Work 👍", "1",{
+  await program.rpc.addMessage(creatorPubkey, "Nice Work 👍", "1.1",{
     accounts: {
       baseAccount: baseAccount.publicKey,
       user: provider.wallet.publicKey,

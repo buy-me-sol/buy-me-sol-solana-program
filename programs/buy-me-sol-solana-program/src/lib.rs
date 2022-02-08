@@ -69,14 +69,12 @@ pub mod buy_me_sol_solana_program {
         let base_account = &mut ctx.accounts.base_account;
         let user = &mut ctx.accounts.user;
 
-        let amt: u16 = amount.parse().unwrap();
-
         // Build the struct
         let message_struct = MessageStruct {
             creator_address: creator_pubkey,
             supporter_address: *user.to_account_info().key,
             message: message_from_user,
-            sol_amount: amt,
+            sol_amount: amount,
         };
 
         // Add it to the messages
@@ -136,7 +134,7 @@ pub struct MessageStruct {
     pub creator_address: Pubkey,
     pub supporter_address: Pubkey,
     pub message: String,
-    pub sol_amount: u16,
+    pub sol_amount: String,
 }
 
 #[account]
