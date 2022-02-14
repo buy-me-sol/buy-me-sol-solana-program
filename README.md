@@ -29,3 +29,4 @@ And if you are a supporter, simply search the creator you want to support by use
 Distributed under the MIT License. See LICENSE.txt for more information.
 
 ## Deployment
+<a href="https://buy-me-sol.github.io/buy-me-sol-web-app/"><img src="https://img.shields.io/badge/-GitHub%20Pages-black?style=for-the-badge&logo=github"/></a>
